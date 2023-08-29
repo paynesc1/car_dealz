@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/my_style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome to Car Dealz, {{user.first_name}}!</h1>
+    <h2>Cars for Sale:</h2>
+    <table class="table table-bordered">
+        <tr>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Seller</th>
+            <th>Actions</th>
+        </tr>
+        {%if sellers%}
+            {%for seller in sellers%}
+                <tr>
+                    <td>{{seller.model}}</td>
+                    <td>{{seller.year}}</td>
+                    <td>{{seller.first_name}} {{seller.last_name}}</td>
+                    <td>
+                        <a href="/show/{{seller.id}}">view</a>
+                        {%if seller.user_id == user.id%}
+                            <a href="/edit/{{seller.id}}">| edit</a>
+                        {%endif%}
+
+                    </td>
+                </tr>
+            {%endfor%}
+        {%else%}
+        <p>No cars added yet.</p>
+        {%endif%}
+    </table>
+    <a href="/logout">Logout</a>
+    <a href="/new">+Add a Car</a>
+</body>
+</html>
